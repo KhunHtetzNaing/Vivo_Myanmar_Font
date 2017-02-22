@@ -1,0 +1,199 @@
+﻿Version=6.5
+NumberOfModules=1
+Module1=Starter
+Build1=Default,com.htetznaing.vivococmm
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="19"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~'************ Google Play Services Base ************~\n~AddApplicationText(~\n~   <activity android:name="com.google.android.gms.common.api.GoogleApiActivity"~\n~  android:theme="@android:style/Theme.Translucent.NoTitleBar"~\n~  android:exported="false"/>~\n~    <meta-data~\n~  android:name="com.google.android.gms.version"~\n~  android:value="@integer/google_play_services_version" />~\n~)~\n~'************ Google Play Services Base (end) ************~\n~'************ Firebase Ads ************~\n~AddApplicationText(~\n~  <activity~\n~  android:name="com.google.android.gms.ads.AdActivity"~\n~  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"~\n~  android:theme="@android:style/Theme.Translucent" />~\n~  <activity android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"~\n~  android:theme="@style/Theme.IAPTheme"/>~\n~)~\n~'************ Firebase Ads (end) ************
+IconFile=
+NumberOfFiles=3
+File1=fb.png
+File2=Fuck
+File3=fuckyou
+NumberOfLibraries=2
+Library1=core
+Library2=firebaseadmob
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: Vivo #Coc Myanmar Font
+	#VersionCode: 1
+	#VersionName: 1.0
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+Dim t As Timer
+Dim ad1,ad2 As Timer
+End Sub
+
+Sub Globals
+	Dim b1,b2 As Button
+	Dim mm As Typeface
+	Dim msg As Label
+	Dim bn As AdView
+	Dim it As InterstitialAd
+	Dim lb,lb1 As Label
+	Dim bg As BitmapDrawable
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	bg.Initialize(LoadBitmap(File.DirAssets,"bg.jpg"))
+	Activity.Background = bg 
+	mm = mm.LoadFromAssets("fuckyou")
+	
+	lb.Initialize("")
+	lb.Text = "Install ကိုနွိပ္ပါ။"  &CRLF& "MyanmarFont4Vivo.txj ကိုဖြင့္ၿပီး"&CRLF&"Apply လုပ္ေပးလိုက္ပါ"
+	lb.Typeface = mm
+	lb.Gravity = Gravity.CENTER
+	lb.TextSize = 20
+	Activity.AddView(lb,0%x,1%y,100%x,30%y)
+	
+b1.Initialize("b1")
+b1.Text = "Install"
+Activity.AddView(b1,50%x - 120dip,lb.Top+lb.Height,240dip,60dip)
+
+b2.Initialize("b2")
+b2.Text = "Tutorial"
+Activity.AddView(b2,50%x - 120dip,b1.Top+b1.Height+10dip,240dip,60dip)
+
+t.Initialize("t",5000)
+t.Enabled = False
+
+	msg.Initialize("msg")
+	msg.Color = Colors.White
+	msg.Gravity = Gravity.CENTER
+	msg.Typeface = mm
+	
+	bn.Initialize2("bn", "ca-app-pub-4173348573252986/3643997759", bn.SIZE_SMART_BANNER)
+	Dim height As Int
+	If GetDeviceLayoutValues.ApproximateScreenSize < 6 Then
+		'phones
+		If 100%x > 100%y Then height = 32dip Else height = 50dip
+	Else
+		'tablets
+		height = 90dip
+	End If
+	Activity.AddView(bn, 0dip, 100%y - height, 100%x, height)
+	bn.LoadAd
+	
+	it.Initialize("it","ca-app-pub-4173348573252986/5120730955")
+	it.LoadAd
+	
+	ad1.Initialize("ad1",100)
+	ad1.Enabled = False
+	
+	ad2.Initialize("ad2",60000)
+	ad2.Enabled = True
+	
+	lb1.Initialize("lb1")
+	lb1.Text = "Powered By Myanmar Android Apps"
+	lb1.TextColor = Colors.Green
+	Activity.AddView(lb1,0%x,100%y - 100dip,100%x,50dip)
+	lb1.Gravity = Gravity.CENTER
+End Sub
+
+Sub b2_Click
+	msg.TextSize = 15
+	msg.TextColor = Colors.Red
+	Activity.AddView(msg,0%x,0%y,100%x,100%y)
+	msg.Visible = True
+	b1.Visible=False
+	b2.Visible=False
+	msg.Text = "Install ကိုႏွိပ္ၿပီးတာနဲ႔ ဖုန္းမွာ Default File Manager တစ္ခုခုမေရြးထားရင္ေတာ့ ကိုယ့္ဘာသာကို ဖုန္းထဲက File Manager တစ္ခုခုထဲကိုသြားလိုက္ပါ။	ၿပီးရင္ Vivo Myanmar Font ဆိုတဲ့ဖိုဒါကိုရွာၿပီး ဝင္လိုက္ပါ။ အဲ့ဖိုဒါထဲမွာ MyanmarFont4Vivo.txj ဆိုတဲ့ဖိုင္ေလးကိုဖြင့္ၿပီး Apply ေပးလိုက္ပါ။ အဆင္မေျပတာမ်ားရွိရင္ Facebook က Myanmar Android Apps မွာလာေမးနိုင္ပါတယ္ :)"
+End Sub
+
+Sub lb1_Click
+	Try
+ 		Dim Facebook As Intent
+ 		Facebook.Initialize(Facebook.ACTION_VIEW, "fb://page/627699334104477")
+		StartActivity(Facebook)
+ 	Catch
+ 		Dim i As Intent
+		i.Initialize(i.ACTION_VIEW, "https://m.facebook.com/MmFreeAndroidApps")
+ 		StartActivity(i)
+ 	End Try
+End Sub
+
+Sub b1_Click
+	ProgressDialogShow("Please Wait...")
+t.Enabled = True
+End Sub
+
+Sub t_Tick
+	ProgressDialogHide
+	File.MakeDir(File.DirRootExternal,"Vivo Myanmar Font")
+	File.Copy(File.DirAssets,"Fuck",File.DirRootExternal & "/Vivo Myanmar Font","MyanmarFont4Vivo.txj")
+	Try
+		Dim i As Intent
+		i.Initialize(i.ACTION_VIEW, "file://" &  File.DirRootExternal&"/Vivo Myanmar Font" )
+		i.SetType( "resource/folder" )
+		StartActivity(i)
+		ad1.Enabled = True
+	Catch
+		msg.TextSize = 25
+		msg.TextColor = Colors.Magenta
+		Activity.AddView(msg,0%x,0%y,100%x,100%y)
+		msg.Visible = True
+		b1.Visible=False
+		b2.Visible=False
+		msg.Text = "File Manager တစ္ခုခုထဲသို႔သြားၿပီး 	Vivo Myanmar Font ဖိုဒါထဲကိုဝင္ပါ။ MyanmarFont4Vivo.txj ကိုဖြင့္ၿပီး Apply လုပ္ေပးလိုက္ပါ"
+		ad1.Enabled =True
+	End Try
+	t.Enabled = False
+End Sub
+
+Sub ad1_Tick
+	If it.Ready Then it.Show Else it.LoadAd
+	ad1.Enabled = False
+End Sub
+
+Sub ad2_Tick
+	If it.Ready Then it.Show Else it.LoadAd
+End Sub
+
+Sub it_AdClosed
+	it.LoadAd
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+Sub Activity_KeyPress (KeyCode As Int) As Boolean
+	Dim Answ As Int
+	If KeyCode = KeyCodes.KEYCODE_BACK Then
+		Answ = Msgbox2("If you want to get new updates on  Facebook? Please Like " &CRLF & "Myanmar Android Apps Page!","Attention!", "Yes", "", "No",LoadBitmap(File.DirAssets,"fb.png" ))
+		If Answ = DialogResponse.NEGATIVE Then
+			ad1.Enabled = True
+			Return False
+		End If
+	End If
+	If Answ = DialogResponse.POSITIVE Then
+		ad1.Enabled = True
+		Try
+ 
+			Dim Facebook As Intent
+ 
+			Facebook.Initialize(Facebook.ACTION_VIEW, "fb://page/627699334104477")
+			StartActivity(Facebook)
+ 
+		Catch
+ 
+			Dim i As Intent
+			i.Initialize(i.ACTION_VIEW, "https://m.facebook.com/MmFreeAndroidApps")
+ 
+			StartActivity(i)
+ 
+		End Try
+		Return False
+	End If
+End Sub
